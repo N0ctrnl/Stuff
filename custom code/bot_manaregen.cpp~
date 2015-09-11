@@ -1,0 +1,68 @@
+// Mana Regen Buff - N0ctrnl
+	if ((!strcasecmp(sep->arg[1], "hp1")) && (c->IsGrouped())) {
+		Mob *ManaRegenCaster;
+		uint32 ManaRegenClass = 0;
+		Group *g = c->GetGroup();
+		Mob *target = c->GetTarget();
+		if(g) {
+			for(int i = 0; i < MAX_GROUP_MEMBERS; i++){
+				if(g->members[i] && g->members[i]->IsBot()) {
+					switch(g->members[i]->GetClass()) {
+						case CLERIC:
+							ManaRegenCaster = g->members[i];
+							ManaRegenClass = ENCHANTER;
+							break;
+					}
+				}
+			}
+			switch(ManaRegenClass) {
+                                case ENCHANTER:
+                                        if (c->GetLevel() >= 60) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Koadic's Endless Intellect.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(2570, target);
+                                        }
+                                        else if (c->GetLevel() >= 52) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Clarity II.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(1693, target);
+					}
+                                        else if (c->GetLevel() >= 26) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Clarity.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(174, target);
+					}
+                                        else if (c->GetLevel() >= 14) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Breeze.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(697, target);
+					}
+                                        else if (c->GetLevel() <= 13) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "I must reach level 14 before casting a mana regen buff.");
+                                        }
+					break;
+						
+				case SHAMAN:
+                                        if (c->GetLevel() >= 56) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Celerity.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(171, target);
+                                        }
+                                        else if (c->GetLevel() >= 42) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Alacrity.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(170, target);
+                                        }
+                                        else if (c->GetLevel() >= 26) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Quickness.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(39, target);
+                                        }
+                                        else if (c->GetLevel() <= 25) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "I must reach level 26 before casting a haste buff.");
+                                        }
+                                        break;
+				case BEASTLORD:
+					if (c->GetLevel() >= 60) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "Casting Alacrity.");
+                                                ManaRegenCaster->CastToBot()->SpellOnTarget(170, target);
+                                        }
+                                        else if (c->GetLevel() <= 59) {
+                                                ManaRegenCaster->CastToBot()->BotGroupSay(ManaRegenCaster->CastToBot(), "I must reach level 60 before casting a haste buff.");
+                                        }
+                        }
+		}
+	}

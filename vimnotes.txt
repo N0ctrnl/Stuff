@@ -1,0 +1,21 @@
+release:2.0{
+DeleteFile:spells_us.txt
+DeleteFile:kithicor.s3d
+DeleteFile:kithicor_obj.s3d
+DownloadFile:spells_us.txt
+DownloadFile:kithicor.s3d
+DownloadFile:kithicor_obj.s3d
+DownloadFile:bazaar.txt,maps\
+DownloadFile:commonlands.txt,maps\
+}
+
+
+END
+:%s/$/\*/g
+REPLACE THE *
+
+BEGINNING
+:%s!^!//!
+REPLACE THE //
+
+%s!^!DownloadFile:!

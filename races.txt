@@ -1,0 +1,17 @@
+Gnoll
+Wurm
+Drake
+Orc
+Bixie
+gorgon - 527
+goo - 547, 8, 9
+aviaks - 558 - texture 2
+beetle - 559
+ape - 560 t1
+phinn - 561
+shissar - 563
+minotaur - 574
+BURNAI - 602
+IKSAR SKELETON - 606
+GOLEM - 608
+SARNAK - 610
