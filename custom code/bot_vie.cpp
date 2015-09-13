@@ -1,0 +1,29 @@
+// DeathSave Buff - N0ctrnl
+	if ((!strcasecmp(sep->arg[1], "buff") && !strcasecmp(sep->arg[2], "di")) && (c->IsGrouped())) {
+		Mob *DeathSaveCaster;
+		uint32 DeathSaveClass = 0;
+		Group *g = c->GetGroup();
+		Mob *target = c->GetTarget();
+		if(g) {
+			for(int i = 0; i < MAX_GROUP_MEMBERS; i++){
+				if(g->members[i] && g->members[i]->IsBot()) {
+					switch(g->members[i]->GetClass()) {
+						case CLERIC:
+							DeathSaveCaster = g->members[i];
+							DeathSaveClass = CLERIC;
+							break;
+					default:
+						break;
+					}
+				}
+			}
+			switch(DeathSaveClass) {
+                                case CLERIC:
+                                        if (c->GetLevel() >= 60) { DeathSaveCaster->CastToBot()->SpellOnTarget(1546, target); }
+                                        else if (c->GetLevel() >= 51) { DeathSaveCaster->CastToBot()->SpellOnTarget(1547, target); }
+					else if (c->GetLevel() <= 50) { DeathSaveCaster->CastToBot()->BotGroupSay(DeathSaveCaster->CastToBot(), "I must reach level 51 before casting a death save buff."); }
+					break;
+                        }
+		}
+	}
+
