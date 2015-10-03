@@ -1,0 +1,170 @@
+CREATE TABLE `bots` (
+  `BotID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotOwnerCharacterID` int(10) unsigned NOT NULL,
+  `BotSpellsID` int(10) unsigned NOT NULL DEFAULT '0',
+  `Name` varchar(64) NOT NULL,
+  `LastName` varchar(32) DEFAULT NULL,
+  `BotLevel` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `Race` smallint(5) NOT NULL DEFAULT '0',
+  `Class` tinyint(2) NOT NULL DEFAULT '0',
+  `Gender` tinyint(2) NOT NULL DEFAULT '0',
+  `Size` float NOT NULL DEFAULT '0',
+  `Face` int(10) NOT NULL DEFAULT '1',
+  `LuclinHairStyle` int(10) NOT NULL DEFAULT '1',
+  `LuclinHairColor` int(10) NOT NULL DEFAULT '1',
+  `LuclinEyeColor` int(10) NOT NULL DEFAULT '1',
+  `LuclinEyeColor2` int(10) NOT NULL DEFAULT '1',
+  `LuclinBeardColor` int(10) NOT NULL DEFAULT '1',
+  `LuclinBeard` int(10) NOT NULL DEFAULT '0',
+  `DrakkinHeritage` int(10) NOT NULL DEFAULT '0',
+  `DrakkinTattoo` int(10) NOT NULL DEFAULT '0',
+  `DrakkinDetails` int(10) NOT NULL DEFAULT '0',
+  `HP` int(11) NOT NULL DEFAULT '0',
+  `Mana` int(11) NOT NULL DEFAULT '0',
+  `MR` smallint(5) NOT NULL DEFAULT '0',
+  `CR` smallint(5) NOT NULL DEFAULT '0',
+  `DR` smallint(5) NOT NULL DEFAULT '0',
+  `FR` smallint(5) NOT NULL DEFAULT '0',
+  `PR` smallint(5) NOT NULL DEFAULT '0',
+  `Corrup` smallint(5) NOT NULL DEFAULT '0',
+  `AC` smallint(5) NOT NULL DEFAULT '0',
+  `STR` mediumint(8) NOT NULL DEFAULT '75',
+  `STA` mediumint(8) NOT NULL DEFAULT '75',
+  `DEX` mediumint(8) NOT NULL DEFAULT '75',
+  `AGI` mediumint(8) NOT NULL DEFAULT '75',
+  `_INT` mediumint(8) NOT NULL DEFAULT '80',
+  `WIS` mediumint(8) NOT NULL DEFAULT '75',
+  `CHA` mediumint(8) NOT NULL DEFAULT '75',
+  `ATK` mediumint(9) NOT NULL DEFAULT '0',
+  `BotCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastSpawnDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `TotalPlayTime` int(10) unsigned NOT NULL DEFAULT '0',
+  `LastZoneId` smallint(6) NOT NULL DEFAULT '0',
+  `BotInspectMessage` varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (`BotID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1264 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botstances` (
+  `BotID` int(10) unsigned NOT NULL DEFAULT '0',
+  `StanceID` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotID`),
+  CONSTRAINT `FK_botstances_1` FOREIGN KEY (`BotID`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `bottimers` (
+  `BotID` int(10) unsigned NOT NULL DEFAULT '0',
+  `TimerID` int(10) unsigned NOT NULL DEFAULT '0',
+  `Value` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotID`),
+  CONSTRAINT `FK_bottimers_1` FOREIGN KEY (`BotID`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botbuffs` (
+  `BotBuffId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotId` int(10) unsigned NOT NULL DEFAULT '0',
+  `SpellId` int(10) unsigned NOT NULL DEFAULT '0',
+  `CasterLevel` int(10) unsigned NOT NULL DEFAULT '0',
+  `DurationFormula` int(10) unsigned NOT NULL DEFAULT '0',
+  `TicsRemaining` int(11) unsigned NOT NULL DEFAULT '0',
+  `PoisonCounters` int(11) unsigned NOT NULL DEFAULT '0',
+  `DiseaseCounters` int(11) unsigned NOT NULL DEFAULT '0',
+  `CurseCounters` int(11) unsigned NOT NULL DEFAULT '0',
+  `CorruptionCounters` int(11) unsigned NOT NULL DEFAULT '0',
+  `HitCount` int(10) unsigned NOT NULL DEFAULT '0',
+  `MeleeRune` int(10) unsigned NOT NULL DEFAULT '0',
+  `MagicRune` int(10) unsigned NOT NULL DEFAULT '0',
+  `dot_rune` int(10) NOT NULL DEFAULT '0',
+  `caston_x` int(10) NOT NULL DEFAULT '0',
+  `Persistent` tinyint(1) NOT NULL DEFAULT '0',
+  `caston_y` int(10) NOT NULL DEFAULT '0',
+  `caston_z` int(10) NOT NULL DEFAULT '0',
+  `ExtraDIChance` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotBuffId`),
+  KEY `FK_botbuff_1` (`BotId`),
+  CONSTRAINT `FK_botbuff_1` FOREIGN KEY (`BotId`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB AUTO_INCREMENT=857480 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botinventory` (
+  `BotInventoryID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotID` int(10) unsigned NOT NULL DEFAULT '0',
+  `SlotID` int(11) NOT NULL DEFAULT '0',
+  `ItemID` int(10) unsigned NOT NULL DEFAULT '0',
+  `charges` tinyint(3) unsigned DEFAULT '0',
+  `color` int(10) unsigned NOT NULL DEFAULT '0',
+  `augslot1` mediumint(7) unsigned NOT NULL DEFAULT '0',
+  `augslot2` mediumint(7) unsigned NOT NULL DEFAULT '0',
+  `augslot3` mediumint(7) unsigned NOT NULL DEFAULT '0',
+  `augslot4` mediumint(7) unsigned NOT NULL DEFAULT '0',
+  `augslot5` mediumint(7) unsigned DEFAULT '0',
+  `instnodrop` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotInventoryID`),
+  KEY `FK_botinventory_1` (`BotID`),
+  CONSTRAINT `FK_botinventory_1` FOREIGN KEY (`BotID`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6821 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botpets` (
+  `BotPetsId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `PetId` int(10) unsigned NOT NULL DEFAULT '0',
+  `BotId` int(10) unsigned NOT NULL DEFAULT '0',
+  `Name` varchar(64) DEFAULT NULL,
+  `Mana` int(11) NOT NULL DEFAULT '0',
+  `HitPoints` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotPetsId`),
+  UNIQUE KEY `U_botpets_1` (`BotId`),
+  KEY `FK_botpets_1` (`BotId`),
+  CONSTRAINT `FK_botpets_1` FOREIGN KEY (`BotId`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9431 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botpetbuffs` (
+  `BotPetBuffId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotPetsId` int(10) unsigned NOT NULL DEFAULT '0',
+  `SpellId` int(10) unsigned NOT NULL DEFAULT '0',
+  `CasterLevel` int(10) unsigned NOT NULL DEFAULT '0',
+  `Duration` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotPetBuffId`),
+  KEY `FK_botpetbuffs_1` (`BotPetsId`),
+  CONSTRAINT `FK_botpetbuffs_1` FOREIGN KEY (`BotPetsId`) REFERENCES `botpets` (`BotPetsId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botpetinventory` (
+  `BotPetInventoryId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotPetsId` int(10) unsigned NOT NULL DEFAULT '0',
+  `ItemId` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotPetInventoryId`),
+  KEY `FK_botpetinventory_1` (`BotPetsId`),
+  CONSTRAINT `FK_botpetinventory_1` FOREIGN KEY (`BotPetsId`) REFERENCES `botpets` (`BotPetsId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botgroup` (
+  `BotGroupId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotGroupLeaderBotId` int(10) unsigned NOT NULL DEFAULT '0',
+  `BotGroupName` varchar(64) NOT NULL,
+  PRIMARY KEY (`BotGroupId`),
+  KEY `FK_botgroup_1` (`BotGroupLeaderBotId`),
+  CONSTRAINT `FK_botgroup_1` FOREIGN KEY (`BotGroupLeaderBotId`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botgroupmembers` (
+  `BotGroupMemberId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `BotGroupId` int(10) unsigned NOT NULL DEFAULT '0',
+  `BotId` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`BotGroupMemberId`),
+  KEY `FK_botgroupmembers_1` (`BotGroupId`),
+  KEY `FK_botgroupmembers_2` (`BotId`),
+  CONSTRAINT `FK_botgroupmembers_1` FOREIGN KEY (`BotGroupId`) REFERENCES `botgroup` (`BotGroupId`),
+  CONSTRAINT `FK_botgroupmembers_2` FOREIGN KEY (`BotId`) REFERENCES `bots` (`BotID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `botguildmembers` (
+  `char_id` int(11) NOT NULL DEFAULT '0',
+  `guild_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rank` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `tribute_enable` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `total_tribute` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_tribute` int(10) unsigned NOT NULL DEFAULT '0',
+  `banker` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `public_note` text,
+  `alt` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`char_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
